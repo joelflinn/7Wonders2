@@ -16,6 +16,11 @@ def boardList(request):
     context = {'board_list' : board_list}
     return render (request, 'wonders_app/boardList.html', context)
 
+# view to look at the individual details of a board
+def boardDetail(request, my_id):
+    board_obj = Board.objects.get(id=my_id)
+    context = {'board_obj': board_obj}
+    return render (request,'wonders_app/boardDetail.html', context)
 
 # to be implemented later
 def login(request):

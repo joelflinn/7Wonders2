@@ -3,16 +3,21 @@
 
 <!-- Replace block content in base_template.html -->
 {% block content %}
-<br>
-<h1>Board Listing</h1>
-<br>
+    <br>
+    <h1>Board Listing</h1>
+    <br>
+
+    <a href="#" > 
+        <button class="button"> Add Board</button>
+    </a><br>
+
     <ul class="list-group">
         {% for i in board_list %}
             <li class="list-group-item"> <strong>Board Name:</strong> <br>
                 {{i.name}}
 
-                <a href="#"> 
-                    <button type="button">View</button>
+                <a href="{%url 'boardDetail' my_id=i.pk%}"> 
+                    <button class="button">View</button>
                 </a>
             </li>
         {% endfor %}

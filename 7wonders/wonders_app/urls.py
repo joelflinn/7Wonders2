@@ -11,7 +11,7 @@ urlpatterns = [
 path('', views.index, name='index'),
 
 path('boards/', views.boardList, name = 'boardList'),
-
+path('board/<int:my_id>', views.boardDetail, name = 'boardDetail'),
 
 
 # to be implemented later
