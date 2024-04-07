@@ -13,7 +13,7 @@ def index(request):
 # view to display all of the different students
 def boardList(request):
     board_list = Board.objects.all()
-    context = {'board_list' : board_list}
+    context = {'board_list': board_list}
     return render (request, 'wonders_app/boardList.html', context)
 
 # view to look at the individual details of a board
@@ -24,16 +24,17 @@ def boardDetail(request, my_id):
 
 # view to create a board
 def createBoard(request):
+
     #display default form first time requested
     form = BoardForm()
 
     if request.method == 'POST':
+
         # store the data the user entered into a variable
         board_data = request.POST.copy()
         form = BoardForm(board_data)
 
         if form.is_valid():
-
             form.save()
             # redirect back to the board list page
             return redirect(boardList)
@@ -57,7 +58,16 @@ def updateBoard(request, my_id):
     context = {'form': form}
     return render(request, 'wonders_app/boardForm.html', context)
 
+def deleteBoard(request, my_id):
+    board_obj = Board.objects.get(id=my_id)
 
+    if request.method == "POST":
+        board_obj.delete()
+        # redirect back to the portfolio detail page
+        return redirect(boardList)
+    
+    context = {"board_obj": board_obj}
+    return render (request,'wonders_app/boardDeleteForm.html', context)
 
 # to be implemented later
 def login(request):

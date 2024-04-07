@@ -13,7 +13,8 @@ path('', views.index, name='index'),
 path('boards/', views.boardList, name = 'boardList'),
 path('board/<int:my_id>', views.boardDetail, name = 'boardDetail'),
 path('create_board/',views.createBoard, name = 'createBoard'),
-path('board/<int:my_id>/update/', views.updateBoard, name = 'updateBoard'),
+path('update_board/<int:my_id>/', views.updateBoard, name = 'updateBoard'),
+path('delete_board/<int:my_id>/', views.deleteBoard, name = 'deleteBoard'),
 
 # to be implemented later
 path('login', views.login, name = 'login'),
