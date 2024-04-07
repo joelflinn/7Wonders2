@@ -7,15 +7,14 @@
     <h1>Board Listing</h1>
     <br>
 
-    <a href="#" > 
+    <a href="{%url 'createBoard'%}" > 
         <button class="button"> Add Board</button>
     </a><br>
 
     <ul class="list-group">
         {% for i in board_list %}
-            <li class="list-group-item"> <strong>Board Name:</strong> <br>
-                {{i.name}}
-
+            <li class="list-group-item"> <strong>Board Name: </strong>{{i.name}}
+                <br>
                 <a href="{%url 'boardDetail' my_id=i.pk%}"> 
                     <button class="button">View</button>
                 </a>
