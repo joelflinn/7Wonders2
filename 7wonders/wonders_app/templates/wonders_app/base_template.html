@@ -1,6 +1,26 @@
 {% load static %}
 
 <!DOCTYPE html>
+<html>
+<head>
+<style>
+.button {
+  background-color: #f9cf42;
+  border: 2px solid #e7e7e7;
+  color: black;
+  padding: 4px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+</style>
+</head>
+<body>
+
 <html lang="en">
  <head>
    <title>UCCS CS Students</title>
@@ -24,7 +44,7 @@
            <div class="navbar-nav">
              <!--  {% url 'index' %}  is defined in url path to dynamically create url -->
              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
-             <a class="nav-link" href="#">Board List</a>
+             <a class="nav-link" href="{% url 'boardList' %}">Board List</a>
              <a class="nav-link" href="#">Menu 3</a>
 
            </div>
