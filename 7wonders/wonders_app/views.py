@@ -69,6 +69,16 @@ def deleteBoard(request, my_id):
     context = {"board_obj": board_obj}
     return render (request,'wonders_app/boardDeleteForm.html', context)
 
+def addCards(request, my_id):
+    board_obj = Board.objects.get(id=my_id)
+
+    if request.method == "POST":
+        # redirect back to the portfolio detail page
+        return redirect(boardDetail(my_id=my_id))
+    
+    context = {"board_obj": board_obj}
+    return render (request,'wonders_app/addCardForm.html', context)
+
 # to be implemented later
 def login(request):
     return HttpResponse("login page :)")

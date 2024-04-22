@@ -1,0 +1,29 @@
+<!-- inherit from base.html-->
+{% extends "wonders_app/base_template.html" %}
+
+<!-- Replace block content in base_template.html -->
+{% block content %}
+
+    <form action="" method="POST">
+
+
+        <div class="row" style="background-color:gray;">
+            {% for match in Matches %}
+            <select name="test" class="form-control">
+                <option value={{match.team1.abbr}}><img src={{match.team1.logo.url}} alt={{match.team1.name}} width="100" height="100"></option>
+                <option value={{match.team2.abbr}}><img src={{match.team2.logo.url}} alt={{match.team2.name}} width="100" height="100"></option>
+            </select>{% endfor %}
+        </div>
+
+        {% csrf_token %}
+        <table>
+        {{form.as_table}}
+        </table>
+        <input type = "submit" name="Submit" />
+        
+        
+
+    </form>
+
+
+{% endblock %}

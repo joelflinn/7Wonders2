@@ -18,11 +18,18 @@
 <a href="{% url 'updateBoard' my_id=board_obj.pk %}" > 
     <button class="button">Edit Board</button>
 </a>
+
 <br>
+
 <a href="{% url 'deleteBoard' my_id=board_obj.pk %}" > 
     <button class="button">Delete Board</button>
 </a>
 
+<br>
+<br>
+<a href="{% url 'addCards' my_id=board_obj.pk %}" > 
+    <button class="button">Add Cards to Board</button>
+</a>
 
 
 {% endblock %}

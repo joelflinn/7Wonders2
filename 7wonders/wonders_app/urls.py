@@ -15,6 +15,8 @@ path('board/<int:my_id>', views.boardDetail, name = 'boardDetail'),
 path('create_board/',views.createBoard, name = 'createBoard'),
 path('update_board/<int:my_id>/', views.updateBoard, name = 'updateBoard'),
 path('delete_board/<int:my_id>/', views.deleteBoard, name = 'deleteBoard'),
+path('board/<int:my_id>/add_cards/', views.addCards, name = 'addCards'),
+
 
 # to be implemented later
 path('login', views.login, name = 'login'),
