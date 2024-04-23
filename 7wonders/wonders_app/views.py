@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from .models import *
-from .forms import BoardForm
+from .forms import *
 
 # Create your views here.
 
@@ -70,17 +70,25 @@ def deleteBoard(request, my_id):
     return render (request,'wonders_app/boardDeleteForm.html', context)
 
 def addCards(request, my_id):
-    board_obj = Board.objects.get(id=my_id)
+    card_options = Card.objects.all()
+
 
     if request.method == "POST":
+        # select the items that have a checked box
+        Selected_card_list = request.POST.getlist('boxes')
+        print(Selected_card_list)
+
         # redirect back to the portfolio detail page
-        return redirect(boardDetail(my_id=my_id))
+        return redirect(boardList)
     
-    context = {"board_obj": board_obj}
+    context = {"card_options": card_options}
     return render (request,'wonders_app/addCardForm.html', context)
 
 # to be implemented later
 def login(request):
     return HttpResponse("login page :)")
+
 def logout(request):
    return HttpResponse("logout")
+
+
