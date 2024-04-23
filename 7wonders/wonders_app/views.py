@@ -84,7 +84,7 @@ def addCards(request, my_id):
         for i in Selected_card_list:
             card_obj = Card.objects.get(id=i)
             temp = InstanceCards(
-                name = i,
+                name = card_obj.name,
                 pointValue = card_obj.pointValue,
                 board_id = my_id,
                 card_image = card_obj.card_image,
