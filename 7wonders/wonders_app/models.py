@@ -20,7 +20,8 @@ class Board(models.Model):
     def get_absolute_url(self):
         return reverse('7wonders', args=[str(self.id)])
     
-
+# this is a model that will be used to show a list of all the cards when the user is 
+# prompted to select cards to add to their board
 class Card(models.Model):
     name = models.CharField(max_length=200)
 
@@ -34,9 +35,9 @@ class Card(models.Model):
     def get_absolute_url(self):
         return reverse('7wonders', args=[str(self.id)])
     
+# this model represents cards that are actually part of a boards game
 class InstanceCards(models.Model):
     name = models.CharField(max_length=200)
-
     add_to_board = models.BooleanField(default=False)
     pointValue = models.PositiveBigIntegerField(default=0)
     board = models.ForeignKey(Board, on_delete=models.CASCADE,null = True)

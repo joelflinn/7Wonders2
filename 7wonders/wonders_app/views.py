@@ -73,10 +73,24 @@ def addCards(request, my_id):
     card_options = Card.objects.all()
 
 
+
     if request.method == "POST":
-        # select the items that have a checked box
+        # select the items that have a checked box. NOTE: that these items
+        # are selected and returned by their pk value in the Card table
         Selected_card_list = request.POST.getlist('boxes')
         print(Selected_card_list)
+
+        # create objects based off the list and store them in a list of objects
+        for i in Selected_card_list:
+            card_obj = Card.objects.get(id=i)
+            temp = InstanceCards(
+                name = i,
+                pointValue = card_obj.pointValue,
+                board_id = my_id,
+                card_image = card_obj.card_image,
+            )
+            # link those objects to the current board
+            temp.save()
 
         # redirect back to the portfolio detail page
         return redirect(boardList)
