@@ -72,8 +72,6 @@ def deleteBoard(request, my_id):
 def addCards(request, my_id):
     card_options = Card.objects.all()
 
-
-
     if request.method == "POST":
         # select the items that have a checked box. NOTE: that these items
         # are selected and returned by their pk value in the Card table
@@ -82,7 +80,11 @@ def addCards(request, my_id):
 
         # create objects based off the list and store them in a list of objects
         for i in Selected_card_list:
+            # card_obj will act as a template for creating the instanceCard object
+            # that is assigned to a specific board.
             card_obj = Card.objects.get(id=i)
+            # creating an instanceCards object based off info of Card object
+            # that was selected
             temp = InstanceCards(
                 name = card_obj.name,
                 pointValue = card_obj.pointValue,
@@ -92,7 +94,7 @@ def addCards(request, my_id):
             # link those objects to the current board
             temp.save()
 
-        # redirect back to the portfolio detail page
+        # redirect back to the board detail page
         return redirect(boardList)
     
     context = {"card_options": card_options}
