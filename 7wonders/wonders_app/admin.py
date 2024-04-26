@@ -6,4 +6,6 @@ from .models import *
 admin.site.register(Board)
 admin.site.register(Card)
 admin.site.register(InstanceCards)
+admin.site.register(Player)
+
 
