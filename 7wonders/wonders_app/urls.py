@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
 from .models import *
 
@@ -17,6 +17,8 @@ path('update_board/<int:my_id>/', views.updateBoard, name = 'updateBoard'),
 path('delete_board/<int:my_id>/', views.deleteBoard, name = 'deleteBoard'),
 path('board/<int:my_id>/add_cards/', views.addCards, name = 'addCards'),
 
+# used to handle login information
+path('accounts/', include('django.contrib.auth.urls')),
 
 # to be implemented later
 path('login', views.login, name = 'login'),

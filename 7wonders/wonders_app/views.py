@@ -102,6 +102,7 @@ def addCards(request, my_id):
 
 # to be implemented later
 def login(request):
+    return render(request, 'wonders_app/index.html')
     return HttpResponse("login page :)")
 
 def logout(request):
