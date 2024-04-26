@@ -3,6 +3,13 @@ from django.urls import reverse
 
 
 # Create your models here.
+
+
+class Player(models.Model):
+    name = models.CharField(max_length=200)
+    number_of_wins = models.PositiveBigIntegerField(default=0)
+
+
 class Board(models.Model):
     WIN_OR_LOSS = (
         ('WIN', 'win'),
@@ -13,7 +20,9 @@ class Board(models.Model):
     board_type = models.CharField(max_length=200)
     win_or_loss = models.CharField(max_length=200, choices= WIN_OR_LOSS)
     score = models.PositiveBigIntegerField(default=0)
-    
+    # multiple boards can relate to a single player
+    player = models.ForeignKey(Player, on_delete=models.CASCADE,null = True)
+
     def __str__(self):
         return self.name
     
@@ -39,6 +48,7 @@ class InstanceCards(models.Model):
     name = models.CharField(max_length=200)
     add_to_board = models.BooleanField(default=False)
     pointValue = models.PositiveBigIntegerField(default=0)
+    # multiple instance cards can relate to 
     board = models.ForeignKey(Board, on_delete=models.CASCADE,null = True)
     card_image = models.ImageField(default=None)
 
@@ -47,3 +57,6 @@ class InstanceCards(models.Model):
     
     def get_absolute_url(self):
         return reverse('7wonders', args=[str(self.id)])
+    
+
+
