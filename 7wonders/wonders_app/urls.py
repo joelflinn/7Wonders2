@@ -19,8 +19,11 @@ path('board/<int:my_id>/add_cards/', views.addCards, name = 'addCards'),
 
 # used to handle login information
 path('accounts/', include('django.contrib.auth.urls')),
+path('accounts/register/', views.registerPage, name = 'registerPage'),
+path('accounts/profile/', views.userPage, name = 'profilePage'),
 
-# to be implemented later
-path('login', views.login, name = 'login'),
-path('logout',views.logout, name ='logout'),
+# paths for user login
+path('user/',views.userPage, name = 'userPage'),
+
+
 ]

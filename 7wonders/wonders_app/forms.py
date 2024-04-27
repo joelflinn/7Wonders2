@@ -10,13 +10,6 @@ class BoardForm(ModelForm):
         model = Board
         fields = ('name','board_type','win_or_loss','score', )
 
-'''
-class AddCardForm(ModelForm):
-    class Meta:
-        model = Card
-        fields = ('card_image',)
-'''
-
 class CardForm(forms.Form):
 
     CARDS = (
@@ -37,3 +30,14 @@ class CardForm(forms.Form):
 
     my_card_choices = forms.ChoiceField(choices=CARDS, widget 
     =forms.RadioSelect())
+
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+class PlayerForm(ModelForm):
+    class Meta:
+        model = Player
+        fields = ['name']
+        exclude = ['user', 'number_of_wins']

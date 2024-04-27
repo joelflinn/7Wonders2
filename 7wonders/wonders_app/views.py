@@ -4,6 +4,24 @@ from django.http import HttpResponse
 from .models import *
 from .forms import *
 
+from django.contrib import messages
+from django.contrib.auth.models import Group
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
+
+from django.contrib.auth.decorators import login_required
+from .decorators import allowed_users
+
+# decorators
+class boardListView(LoginRequiredMixin, generic.ListView):
+    model = Board
+
+class boardDetail(LoginRequiredMixin, generic.DetailView):
+    model = Board
+
+
+
+
 # Create your views here.
 
 # home page
@@ -22,6 +40,11 @@ def boardDetail(request, my_id):
     context = {'board_obj': board_obj}
     return render (request,'wonders_app/boardDetail.html', context)
 
+
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['player_role'])
 # view to create a board
 def createBoard(request):
 
@@ -42,7 +65,8 @@ def createBoard(request):
     context = {'form': form}
     return render(request, 'wonders_app/boardForm.html', context)
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['player_role'])
 # view to edit an existing board
 def updateBoard(request, my_id):
     # get the correct board object and if the request is post save the
@@ -58,6 +82,8 @@ def updateBoard(request, my_id):
     context = {'form': form}
     return render(request, 'wonders_app/boardForm.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['player_role'])
 def deleteBoard(request, my_id):
     board_obj = Board.objects.get(id=my_id)
 
@@ -69,6 +95,8 @@ def deleteBoard(request, my_id):
     context = {"board_obj": board_obj}
     return render (request,'wonders_app/boardDeleteForm.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['player_role'])
 def addCards(request, my_id):
     card_options = Card.objects.all()
 
@@ -100,7 +128,60 @@ def addCards(request, my_id):
     context = {"card_options": card_options}
     return render (request,'wonders_app/addCardForm.html', context)
 
+# used to create a user
+def registerPage(request):
+
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form_data = request.POST.copy()
+        form = UserCreationForm(form_data)
+
+        if form.is_valid():
+            print("form was saved")
+
+            userForm = form.save()
+            username = form.cleaned_data.get('username')
+            group = Group.objects.get(name='player_role')
+            print("group was saved")
+
+            userForm.groups.add(group)
+            
+            # create a player and link the player to the newly created user
+            player = Player.objects.create(user=userForm)
+            player.name = username
+            player.save()
+            print("player object was not saved")
+
+
+            messages.success(request, 'Account was created for ' + username)
+            return redirect('login')
+
+    context = {'form' : form}
+    return render(request, 'registration/register.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['player_role'])
+def userPage(request):
+    player = request.user.player
+    form = PlayerForm(instance=player)
+    print('player', player)
+
+    if request.method=='POST':
+        form = PlayerForm(request.POST, request.FILES, instance=player)
+        if form.is_valid():
+            form.save()
+            return redirect(boardList)
+
+
+    context = {'form':form}
+
+    return render(request, 'wonders_app/user.html', context)
+
+
 # to be implemented later
+'''
 def login(request):
     return render(request, 'wonders_app/index.html')
     return HttpResponse("login page :)")
@@ -108,4 +189,4 @@ def login(request):
 def logout(request):
    return HttpResponse("logout")
 
-
+'''
