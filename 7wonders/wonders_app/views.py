@@ -36,8 +36,20 @@ def boardList(request):
 
 # view to look at the individual details of a board
 def boardDetail(request, my_id):
+
+    # var to calculate the total points of the board
+    total = 0
+
     board_obj = Board.objects.get(id=my_id)
-    context = {'board_obj': board_obj}
+    instance_card_list = InstanceCards.objects.all().filter(board_id = my_id)
+    context = {'board_obj': board_obj, 'instance_card_list': instance_card_list}
+
+    for card in instance_card_list:
+        total = total + card.pointValue
+
+    board_obj.score = total
+    board_obj.save()
+
     return render (request,'wonders_app/boardDetail.html', context)
 
 
