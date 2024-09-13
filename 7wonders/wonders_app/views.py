@@ -44,6 +44,7 @@ def boardDetail(request, my_id):
     instance_card_list = InstanceCards.objects.all().filter(board_id = my_id)
     context = {'board_obj': board_obj, 'instance_card_list': instance_card_list}
 
+    # summing up the amount of points from the
     for card in instance_card_list:
         total = total + card.pointValue
 

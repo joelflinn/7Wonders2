@@ -26,8 +26,6 @@ class ModelTestClass(TestCase):
             card_image = "well.PNG"
         )
 
-
-
     def test_false_is_false(self):
         print("testing the player model")
         self.assertEqual(self.player.name, 'test')
